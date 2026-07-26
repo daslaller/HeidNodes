@@ -1,35 +1,32 @@
-# **🏗️ FlNodes Framework**
+# **🏗️ HeidNodes Framework**
 
 ![Dart](https://img.shields.io/badge/Dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=flutter&logoColor=white)
 ![Maintained](https://img.shields.io/badge/maintained%3F-yes-green?style=for-the-badge)
 ![Melos](https://img.shields.io/badge/monorepo-managed%20with%20Melos-magenta?style=for-the-badge)
 
-[![Pub](https://img.shields.io/pub/v/fl_nodes.svg?style=for-the-badge)](https://pub.dev/packages/fl_nodes)
-![Downloads](https://img.shields.io/pub/dm/fl_nodes.svg?style=for-the-badge)
-![Likes](https://img.shields.io/pub/likes/fl_nodes?style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/WilliamKarolDiCioccio/fl_nodes?style=for-the-badge)
-![Repo Size](https://img.shields.io/github/repo-size/WilliamKarolDiCioccio/fl_nodes?style=for-the-badge)
-
-> What do you think of badges? **YES!**
-
-The **FlNodes Framework** is a modular, scalable ecosystem for building sophisticated node-based applications in Flutter. Designed for developers who need professional-grade visual editors, workflow tools, and graph-based interfaces, FlNodes provides a complete solution from low-level rendering to high-level abstractions.
+> **HeidNodes** is an actively maintained fork of [FlNodes](https://github.com/WilliamKarolDiCioccio/fl_nodes) focused on **drag improvements, performance optimizations, and enhanced rendering stability**.
 
 ---
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/WilliamKarolDiCioccio/fl_nodes/refs/heads/main/.github/images/node_editor_example.webp" alt="FlNodes Example" />
-</p>
+## 🎯 What is HeidNodes?
 
-<p align="center">
-  <i >A screenshot from our visual scripting example app</i>
-</p>
+**HeidNodes** is a modular, high-performance Flutter framework for building node-based visual editors and graph interfaces. Built on a proven foundation and enhanced with stability fixes, optimized drag interactions, and refined rendering performance.
+
+### 📍 Fork Focus
+
+This fork addresses critical issues found in the original FlNodes:
+
+- ✅ **Drag & Drop Fixes** — Improved node dragging stability, better proxy handling, and smoother interactions
+- ✅ **Rendering Optimizations** — Reduced unnecessary repaints, smarter viewport culling, optimized link rendering
+- ✅ **Performance Tuning** — Better memory management, efficient spatial hashing, reduced jank during complex operations
+- ✅ **Stability Enhancements** — Fixed edge cases in layout calculations, improved state synchronization, robust parent data handling
 
 ---
 
-### 💡 Use Cases
+## 💡 Use Cases
 
-Whether you're building tools for developers, designers, or end-users, **FlNodes** provides the building blocks for:
+Build professional-grade node editors for:
 
 - 🎮 **Visual Scripting Editors** – Game logic, automation flows, or state machines.
 - 🛠 **Workflow & Process Designers** – Business rules, decision trees, and automation paths.
@@ -43,15 +40,22 @@ Whether you're building tools for developers, designers, or end-users, **FlNodes
 
 ## 🏗️ Framework Architecture
 
-The FlNodes Framework is organized as a monorepo with specialized packages:
+The HeidNodes Framework is organized as a monorepo with specialized packages:
 
 ### 📦 Core Packages
 
-- [**`fl_nodes_core`**](https://github.com/WilliamKarolDiCioccio/fl_nodes/tree/main/packages/fl_nodes_core) – The engine that powers the FlNodes Framework.
+- [**`fl_nodes_core`**](./packages/fl_nodes_core) – The engine that powers HeidNodes: rendering (Flutter shaders), infrastructure, node graph system, and optimized drag handling.
 
-- [**`fl_nodes`**](https://github.com/WilliamKarolDiCioccio/fl_nodes/tree/main/packages/fl_nodes) – A proxy export package that maintains backward compatibility with earlier versions of the FlNodes framework.
+- [**`fl_nodes`**](./packages/fl_nodes) – A proxy export package that maintains backward compatibility with earlier versions.
 
-### 🔌 Coming Soon
+### 🔌 Utilities & Examples
+
+- [**`fl_context_menu`**](./packages/fl_context_menu) – Context menu utility used in examples.
+- [**`examples/fl_nodes_example`**](./examples/fl_nodes_example) – Main example app showcasing the framework and optimizations.
+- [**`examples/fl_context_menu_example`**](./examples/fl_context_menu_example) – Context menu example.
+- [**`benchmarks`**](./benchmarks) – Performance benchmarks and profiling tools.
+
+### 🚀 Coming Soon
 
 - **`fl_nodes_visual_scripting`**
 - **`fl_nodes_mind_maps`**
@@ -59,15 +63,15 @@ The FlNodes Framework is organized as a monorepo with specialized packages:
 
 ---
 
-## 📚 **Getting Started**
+## 📚 Getting Started
 
-For a fast and easy setup, check out our [Quickstart Guide](https://github.com/WilliamKarolDiCioccio/fl_nodes/wiki/Quickstart). It covers the basics to get you up and running with **FlNodes** in no time!
+For a fast and easy setup, check out our [Quickstart Guide](https://github.com/daslaller/HeidNodes/wiki/Quickstart). It covers the basics to get you up and running with **HeidNodes** in no time.
 
-If you're migrating from an earlier version, the `fl_nodes` package maintains backward compatibility while providing access to the new modular architecture.
+If you're migrating from the original FlNodes, the `fl_nodes` package maintains full backward compatibility while providing access to the new performance-enhanced architecture.
 
 ---
 
-## 📦 **Installation**
+## 📦 Installation
 
 Choose the package that fits your needs:
 
@@ -80,7 +84,7 @@ dependencies:
   fl_nodes_core: ^latest_version
 ```
 
-Regardless of the package you choose you must add the following asset:
+Regardless of the package you choose, you must add the following asset:
 
 ```yaml
 flutter:
@@ -96,16 +100,54 @@ flutter pub get
 
 ---
 
-## 🧩 **Examples & Demo**
+## 🧪 Running Examples & Benchmarks
 
-Explore fully working examples:
+All melos commands are defined in root `pubspec.yaml`:
 
-- 📄 **[Code Example](https://github.com/WilliamKarolDiCioccio/fl_nodes/blob/main/example/lib/main.dart)**
-- 🌍 **[Live Example](https://williamkaroldicioccio.github.io/fl_nodes/)**
+```bash
+melos bootstrap              # Install all deps
+melos run example            # Run example in Chrome
+melos run example:profile    # Profile mode with performance insights
+melos run example:release    # Optimized release build
+melos run format             # dart format across all packages
+melos run analyze            # dart analyze --fatal-infos across all packages
+```
+
+**Note:** Run tests manually per-package with `flutter test`. Performance benchmarks are in the `benchmarks/` directory.
 
 ---
 
-### 🕹️ Current input support
+## 🚀 Key Improvements in HeidNodes
+
+### Drag & Drop Enhancements
+
+- **Proxy Offset Management** — Accurate offset tracking during drag operations
+- **State Synchronization** — Improved parent data consistency during interactions
+- **Smooth Interactions** — Reduced latency in drag operations with optimized hit testing
+
+### Rendering Optimizations
+
+- **Compositor-Isolated Link Tiers** — Static links cached, only active tier animates
+- **Viewport Culling** — Smart spatial hash querying with inflation buffer
+- **Reduced Repaints** — Granular dirty flags for selective rendering updates
+- **Port Batching** — Grouped port rendering by style to reduce draw calls
+
+### Performance Tuning
+
+- **Modal Handling** — Proper layout synchronization when overlays are active
+- **Locale Change Resilience** — Forced full passes prevent text rendering desynchronization
+- **Lazy Layout** — Children only laid out if dirty or outside viewport
+- **Efficient Event Handling** — Categorized events (Paint, Layout, Drag, Tree) for targeted updates
+
+### Stability
+
+- **Robust Renderbox Tracking** — Cached layout rects prevent state desync
+- **Safe Parent Data Access** — Null checks and defensive copies throughout
+- **Well-Tested Edge Cases** — Handles complex scenarios (collapse, selection, hover, locale changes)
+
+---
+
+## 📊 Current Input Support
 
 **Legend:**
 
@@ -114,44 +156,57 @@ Explore fully working examples:
 - ⚠️ Partial
 - 🧪 Untested
 
-| 🖥️Desktop and 💻 laptop: | Windows | Linux | macOS |
+| 🖥️Desktop and 💻 Laptop: | Windows | Linux | macOS |
 | ------------------------ | ------- | ----- | ----- |
 | **native/mouse**         | ✅      | ✅    | ✅    |
 | **native/trackpad**      | ✅      | 🧪    | ✅    |
 | **web/mouse**            | ✅      | ✅    | ✅    |
 | **web/trackpad**         | ✅      | ✅    | 🧪    |
 
-| 📱Mobile   | Android | iOS |
+| 📱 Mobile | Android | iOS |
 | ---------- | ------- | --- |
 | **native** | ✅      | 🧪  |
 | **web**    | ✅      | 🧪  |
 
 ---
 
-## 🙌 **Contributing**
+## 🔄 Comparison with Original FlNodes
 
-We'd love your help in making **FlNodes** even better! You can contribute by:
-
-- 💡 [Suggesting new features](https://github.com/WilliamKarolDiCioccio/fl_nodes/issues)
-- 🐛 [Reporting bugs](https://github.com/WilliamKarolDiCioccio/fl_nodes/issues)
-- 🔧 [Submitting pull requests](https://github.com/WilliamKarolDiCioccio/fl_nodes/pulls)
-- 👏 [**Sharing what you've built**](https://github.com/WilliamKarolDiCioccio/fl_nodes/discussions/49)
-
----
-
-## 📜 **License**
-
-**FlNodes** is open-source and released under the [MIT License](LICENSE.md).
-Contributions are welcome!
+| Feature | Original | HeidNodes |
+| --- | --- | --- |
+| **Drag Stability** | ⚠️ Baseline | ✅ Optimized |
+| **Rendering Performance** | Good | ✅ Enhanced |
+| **Link Rendering** | ✅ | ✅ Optimized (tiered) |
+| **Backward Compatibility** | N/A | ✅ Full |
+| **Spatial Hashing** | ✅ | ✅ Improved querying |
+| **Modal Support** | ⚠️ Basic | ✅ Robust |
 
 ---
 
-## 🚀 **Let's Build Together!**
+## 🙌 Contributing
 
-Enjoy using FlNodes and **create amazing node-based UIs** for your Flutter apps and/or **get involved in library's development**! 🌟
+We'd love your help in making **HeidNodes** even better! You can contribute by:
 
-<a href="https://github.com/WilliamKarolDiCioccio/fl_nodes/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=WilliamKarolDiCioccio/fl_nodes" />
-</a>
+- 💡 [Suggesting improvements](https://github.com/daslaller/HeidNodes/issues)
+- 🐛 [Reporting bugs](https://github.com/daslaller/HeidNodes/issues)
+- 🔧 [Submitting pull requests](https://github.com/daslaller/HeidNodes/pulls)
+- 👏 [Sharing what you've built](https://github.com/daslaller/HeidNodes/discussions)
 
-Made with [contrib.rocks](https://contrib.rocks).
+### Development Guidelines
+
+See [AGENTS.md](./AGENTS.md) for architecture overview and coding conventions.
+
+---
+
+## 📜 License
+
+**HeidNodes** is open-source and released under the [MIT License](LICENSE.md).  
+Based on the original FlNodes by [WilliamKarolDiCioccio](https://github.com/WilliamKarolDiCioccio/fl_nodes).
+
+---
+
+## 🚀 Let's Build Together!
+
+Enjoy using HeidNodes and **create amazing node-based UIs** for your Flutter apps! 🌟
+
+For questions or support, open an issue or reach out via discussions.
