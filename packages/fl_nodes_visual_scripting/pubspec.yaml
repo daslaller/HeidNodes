@@ -1,14 +1,14 @@
 name: fl_nodes_visual_scripting
-description: A domain-specific package for visual scripting using the fl_nodes framework.
-version: 0.0.1
-maintainer: William Karol Di Cioccio
+description: A generic, headless trigger/condition/action automation/workflow layer built on fl_nodes_core — run a saved graph without a widget tree, plus friendlier node-authoring helpers.
+version: 0.1.0
+maintainer: daslaller (fork), William Karol Di Cioccio (upstream fl_nodes_core)
 license: MIT
 
 resolution: workspace
 
-homepage: https://williamkaroldicioccio.github.io/fl_nodes/
-repository: https://github.com/WilliamKarolDiCioccio/fl_nodes
-issue_tracker: https://github.com/WilliamKarolDiCioccio/fl_nodes/issues
+homepage: https://github.com/daslaller/heidnodes
+repository: https://github.com/daslaller/heidnodes
+issue_tracker: https://github.com/daslaller/heidnodes/issues
 
 platforms:
   android:
