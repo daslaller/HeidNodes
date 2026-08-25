@@ -595,6 +595,14 @@ class NodeEditorRenderBox extends RenderBox
     return -1;
   }
 
+  /// Nodes size themselves; the layer places them.
+  static const BoxConstraints _childLayoutConstraints = BoxConstraints(
+    minWidth: 0,
+    minHeight: 0,
+    maxWidth: double.infinity,
+    maxHeight: double.infinity,
+  );
+
   @override
   void performLayout() {
     performLayoutCount++;
@@ -624,25 +632,35 @@ class NodeEditorRenderBox extends RenderBox
     _staticLinksLayer.layout(layerConstraints);
     _activeLinksLayer.layout(layerConstraints);
 
-    // If the child has not been laid out yet, we need to layout it.
-    // Otherwise, we only need to layout it if it's within the viewport.
+    // Every child is offered layout, not only the ones an event announced in
+    // `_childrenNotLaidOut`.
+    //
+    // A node widget can dirty *itself* — a host's chrome reacting to its own
+    // state (a run status, a validation ring, a spinner), or any animation
+    // inside a node that moves layout rather than just paint. Nothing tells
+    // this render object about that: the child's `markNeedsLayout` propagates
+    // up and schedules a layout pass, but the child's id never lands in the
+    // announced set. Laying out only announced children left such a child
+    // dirty for good, and `RenderObject._paintWithContext` then returns early
+    // for a child that still needs layout — silently, in both phases. The node
+    // stopped painting and all that was left of it was this layer's cached
+    // drop shadow, drawn from its last known rect.
+    //
+    // Offering layout to every child is cheap: `RenderObject.layout` returns
+    // immediately for a child that is not dirty and whose constraints have not
+    // changed, which is the whole untouched majority. What the announced set
+    // still buys is the *bookkeeping* below — the spatial-hash and cached-rect
+    // writes — which stays skipped unless a child was announced or its rect
+    // actually moved.
+    var rectsChanged = false;
 
-    for (final String nodeId in _childrenNotLaidOut) {
-      final RenderBox? child = _childrenById[nodeId];
+    RenderBox? child = firstChild;
 
-      if (child == null) continue;
-
+    while (child != null) {
       final childParentData = child.parentData! as _ParentData;
+      final String nodeId = childParentData.id;
 
-      child.layout(
-        const BoxConstraints(
-          minWidth: 0,
-          minHeight: 0,
-          maxWidth: double.infinity,
-          maxHeight: double.infinity,
-        ),
-        parentUsesSize: true,
-      );
+      child.layout(_childLayoutConstraints, parentUsesSize: true);
 
       final renderBoxRect = Rect.fromLTWH(
         childParentData.offset.dx,
@@ -651,14 +669,31 @@ class NodeEditorRenderBox extends RenderBox
         child.size.height,
       );
 
-      childParentData.rect = renderBoxRect;
+      final bool announced = _childrenNotLaidOut.contains(nodeId);
 
-      _controller.nodesSpatialHashGrid.update((id: nodeId, rect: renderBoxRect));
+      if (announced || renderBoxRect != childParentData.rect) {
+        if (!announced) rectsChanged = true;
 
-      _controller.getNodeById(nodeId)!.cachedRenderboxRect = renderBoxRect;
+        childParentData.rect = renderBoxRect;
+
+        _controller.nodesSpatialHashGrid.update(
+          (id: nodeId, rect: renderBoxRect),
+        );
+
+        _controller.getNodeById(nodeId)?.cachedRenderboxRect = renderBoxRect;
+      }
+
+      child = childParentData.nextSibling;
     }
 
     _childrenNotLaidOut.clear();
+
+    // A node that resized without an event of its own moved its ports with it,
+    // and the link tiers cache their geometry.
+    if (rectsChanged) {
+      _controller.linksDataDirty = true;
+      _markBothLinkLayersNeedsPaint();
+    }
 
     // Here we should be updating the visibleNodes set with the nodes that are within the viewport.
     // This action is delayed until the paint method to ensure all layout operations are done.
