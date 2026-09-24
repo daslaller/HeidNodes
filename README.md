@@ -48,6 +48,8 @@ The HeidNodes Framework is organized as a monorepo with specialized packages:
 
 - [**`fl_nodes`**](./packages/fl_nodes) – A proxy export package that maintains backward compatibility with earlier versions.
 
+- [**`fl_nodes_visual_scripting`**](./packages/fl_nodes_visual_scripting) – A headless trigger/condition/action automation layer: run a saved graph without a widget tree, with friendlier node-authoring helpers and a run report.
+
 ### 🔌 Utilities & Examples
 
 - [**`fl_context_menu`**](./packages/fl_context_menu) – Context menu utility used in examples.
@@ -57,7 +59,6 @@ The HeidNodes Framework is organized as a monorepo with specialized packages:
 
 ### 🚀 Coming Soon
 
-- **`fl_nodes_visual_scripting`**
 - **`fl_nodes_mind_maps`**
 - **`fl_nodes_flow_graphs`**
 
