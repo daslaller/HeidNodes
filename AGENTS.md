@@ -22,7 +22,9 @@ Workspace members (see `pubspec.yaml` `workspace:` section):
 - **`examples/fl_context_menu_example`**: Context menu example.
 - **`benchmarks`**: Performance benchmarks.
 
-`packages/fl_nodes_visual_scripting` and `packages/fl_nodes_mind_maps` are stub packages in the workspace (not yet implemented).
+- **`packages/fl_nodes_visual_scripting`**: Headless trigger/condition/action automation layer — `AutomationEngine` runs a saved graph without a widget tree; node-authoring helpers; run report. RepairX automations run on it (see `CLAUDE.md`).
+
+`packages/fl_nodes_mind_maps` is a stub package in the workspace (not yet implemented).
 
 ## Commands
 
